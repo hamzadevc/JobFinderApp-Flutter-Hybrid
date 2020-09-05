@@ -1,4 +1,4 @@
-# JobFinder_Application
+# JobFinderApp-Flutter
 
 A new Flutter application.
 
