@@ -165,9 +165,9 @@ color: Colors.white);
                     
                     child: Row(
                       children: <Widget>[
-                        Icon(FontAwesomeIcons.paperPlane, color: Colors.white),
+                        Icon(FontAwesomeIcons.boxes, color: Colors.white),
                         SizedBox(width: 10,),
-                        Text('Applied ', style: TextStyle(color: Colors.white)),
+                        Text('My Gigs ', style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -235,14 +235,22 @@ color: Colors.white);
 
           body: TabBarView(
             children: <Widget>[
-              Container(
-                child: Center(
-                  child: Text(
-                    "Home",
-                    style: TextStyle(color: Colors.white, fontSize: 30.0),
-                  ),
-                ),
-              ),
+
+              ListView(
+                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 2),
+                physics: BouncingScrollPhysics(),
+                children: [
+
+                gigCard(),
+                gigCard(),
+                gigCard(),
+                gigCard()
+              ],)
+              ,
+
+
+
+
               ListView(
                 padding: EdgeInsets.all(10),
                 physics: BouncingScrollPhysics(),
@@ -274,6 +282,67 @@ color: Colors.white);
       ),
     );
   }
+
+
+  Widget gigCard()
+  {
+
+    return Card(
+      shape: RoundedRectangleBorder(
+
+        borderRadius: BorderRadius.circular(10.0),
+        side: new BorderSide(color: Colors.black, width: 1.0),
+      ),
+elevation: 20,
+      child: Container(
+
+padding: EdgeInsets.all(15),
+          width: double.infinity,
+          child:
+          Column(children: [
+
+            Image.network("https://i.pinimg.com/originals/f8/f6/56/f8f656fd473305405d82d4a64f777a85.jpg",
+
+            ),
+
+            Divider(color: Colors.black,
+            thickness: 1,),
+            Row(children: [
+
+              CircleAvatar(child:
+              Image.network("https://cdn2.iconfinder.com/data/icons/ui-v-1-circular-glyph/48/UI_v.1-Circular-Glyph-20-512.png"),
+                backgroundColor: Colors.white70,
+                radius: 30,
+
+              ),
+              SizedBox(width: 15,),
+              Text("Anonymous",style: TextStyle(fontWeight: FontWeight.bold,
+                  fontSize: 22
+              ))
+
+            ],),
+SizedBox(height: 10,),
+            Text("I will Create Wordpress website for u",style: TextStyle(
+                fontSize: 20
+            )),
+
+          SizedBox(height: 15,),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text("\$50 dollars",style: TextStyle(fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
+                  fontSize: 20
+              )),
+            ),
+          ],)
+      ),
+    );
+
+
+
+  }
+
+
 
   Widget JobCard() {
     return Container(
@@ -518,4 +587,7 @@ class Card1 extends StatelessWidget {
           ),
         ));
   }
+
+
+
 }

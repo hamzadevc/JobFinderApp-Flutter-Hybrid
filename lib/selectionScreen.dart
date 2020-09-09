@@ -34,7 +34,7 @@ class _SelectCategoryState extends State<SelectCategory> {
             color: Colors.red,
             padding: const EdgeInsets.all(8.0),
             child: new Text(
-              "Register As Employee"
+              "Register As Seller"
               ,
             ),
           ),
@@ -49,7 +49,7 @@ class _SelectCategoryState extends State<SelectCategory> {
             color: Colors.black,
             padding: const EdgeInsets.all(8.0),
             child: new Text(
-              "Register As Company",
+              "Register As Buyer",
             ),
           )
 

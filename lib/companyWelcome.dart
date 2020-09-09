@@ -162,9 +162,9 @@ class _WelcomeState extends State<Welcome> {
                   Tab(
                     child: Row(
                       children: <Widget>[
-                        Icon(FontAwesomeIcons.male, color: Colors.white),
+                        Icon(FontAwesomeIcons.stream, color: Colors.white),
                         SizedBox(width: 10,),
-                        Text('Applicants ', style: TextStyle(color: Colors.white)),
+                        Text('Categories ', style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -220,15 +220,24 @@ class _WelcomeState extends State<Welcome> {
 
           body: TabBarView(
             children: <Widget>[
-              Container(
-                child: Center(
-                  child:FloatingActionButton(child:
+              GridView.count(
+                physics: BouncingScrollPhysics(),
+                primary: true,
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 20,
+                crossAxisCount: 2,
+                children: <Widget>[
 
-                    Text("Apply"),
+                  categoryCard("Programming",Icon(FontAwesomeIcons.code,color: Colors.black,size: 42,)),
+                  categoryCard("Digital Marketing",Icon(FontAwesomeIcons.bullhorn,color: Colors.black,size: 42,)),
+                  categoryCard("Buisness",Icon(FontAwesomeIcons.businessTime,color: Colors.black,size: 42,)),
+                  categoryCard("Writing and Translation",Icon(FontAwesomeIcons.penAlt,color: Colors.black,size: 42,)),
+                  categoryCard("Lifestyle",Icon(FontAwesomeIcons.leaf,color: Colors.black,size: 42,)),
+                  categoryCard("Graphics and designs",Icon(FontAwesomeIcons.paintBrush,color: Colors.black,size: 42,)),
 
-                  backgroundColor: Colors.red,
-                  )
-                ),
+
+                ],
               ),
 
               Stack(children: <Widget>[
@@ -285,6 +294,35 @@ elevation: 10,
         ),
       ),
     );
+  }
+
+  Card categoryCard(String name,Icon data) {
+    return Card(
+      shape: RoundedRectangleBorder(
+
+
+        side: new BorderSide(color: Colors.indigo, width: 2.0),
+      ),
+
+
+                  elevation: 11,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                     data,
+                      SizedBox(height: 20,),
+                      Text(name, textAlign:TextAlign.center,style: TextStyle(color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                        fontSize: 18,
+
+                      )),
+
+                    ],),
+                    color: Colors.white,
+                  ),
+                );
   }
 
   Widget JobCard() {
