@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "467985251220",
+    "firebase_url": "https://a-freelancer.firebaseio.com",
+    "project_id": "a-freelancer",
+    "storage_bucket": "a-freelancer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467985251220:android:41000f3437268c023f2d81",
+        "android_client_info": {
+          "package_name": "com.flashsol.job_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467985251220-3jarvs7sgaqmot118l48cnhge1jepbhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_sHBATGokIDIv4x7KbIQKnHr1rbPtXos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467985251220-3jarvs7sgaqmot118l48cnhge1jepbhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

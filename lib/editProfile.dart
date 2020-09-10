@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'CRUD.dart';
 class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -44,7 +46,7 @@ class _EditProfileState extends State<EditProfile>
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
                                         image: new NetworkImage(
-                                            "https://image.flaticon.com/icons/png/512/0/93.png"),
+                                           CRUD.imgUrl),
                                         fit: BoxFit.cover,
                                       ),
                                     )),
@@ -123,7 +125,7 @@ class _EditProfileState extends State<EditProfile>
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       new Text(
-                                        'Name',
+                                       'Name',
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold),
@@ -140,14 +142,18 @@ class _EditProfileState extends State<EditProfile>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
+                                        controller: TextEditingController()..text = CRUD.name,
                                       decoration: const InputDecoration(
                                         hintText: "Enter Your Name",
                                       ),
                                       enabled: !_status,
                                       autofocus: !_status,
+                                       onChanged: (value){
 
+                                       CRUD.name=value;
+                                       }),
                                     ),
-                                  ),
+
                                 ],
                               )),
                           Padding(
@@ -178,9 +184,14 @@ class _EditProfileState extends State<EditProfile>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
+                                        controller: TextEditingController()..text = CRUD.email,
                                       decoration: const InputDecoration(
                                           hintText: "Enter Email ID"),
                                       enabled: !_status,
+                                        onChanged: (value){
+
+                                          CRUD.email=value;
+                                        }
                                     ),
                                   ),
                                 ],
@@ -213,9 +224,14 @@ class _EditProfileState extends State<EditProfile>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
+                                        controller: TextEditingController()..text = CRUD.phoneNumber,
                                       decoration: const InputDecoration(
                                           hintText: "Enter Mobile Number"),
                                       enabled: !_status,
+                                        onChanged: (value){
+
+                                          CRUD.phoneNumber=value;
+                                        }
                                     ),
                                   ),
                                 ],
@@ -249,9 +265,14 @@ class _EditProfileState extends State<EditProfile>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
+                                        controller: TextEditingController()..text = CRUD.dob,
                                       decoration: const InputDecoration(
                                           hintText: "Enter Date of Birth"),
                                       enabled: !_status,
+                                        onChanged: (value){
+
+                                          CRUD.dob=value;
+                                        }
                                     ),
                                   ),
                                 ],
@@ -284,9 +305,14 @@ class _EditProfileState extends State<EditProfile>
                                 children: <Widget>[
                                   new Flexible(
                                     child: new TextField(
+                                        controller: TextEditingController()..text = CRUD.address,
                                       decoration: const InputDecoration(
                                           hintText: "Enter Address"),
                                       enabled: !_status,
+                                        onChanged: (value){
+
+                                          CRUD.address=value;
+                                        }
                                     ),
                                   ),
                                 ],
@@ -333,18 +359,29 @@ class _EditProfileState extends State<EditProfile>
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 10.0),
                                       child: new TextField(
+                                          controller: TextEditingController()..text = CRUD.country,
                                         decoration: const InputDecoration(
                                             hintText: "Enter Country"),
                                         enabled: !_status,
+                                          onChanged: (value){
+
+                                            CRUD.country=value;
+                                          }
                                       ),
+
                                     ),
                                     flex: 2,
                                   ),
                                   Flexible(
                                     child: new TextField(
+                                        controller: TextEditingController()..text = CRUD.city,
                                       decoration: const InputDecoration(
                                           hintText: "Enter City"),
                                       enabled: !_status,
+                                        onChanged: (value){
+
+                                          CRUD.city=value;
+                                        }
                                     ),
                                     flex: 2,
                                   ),

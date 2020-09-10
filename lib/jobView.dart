@@ -38,7 +38,7 @@ backgroundColor: Colors.white,
           },
           color: Colors.deepPurple,
           child:
-          Text("Apply",style: infoStyle,),
+          Text("Purchase",style: infoStyle,),
         ),
       ),
       body: Column(
@@ -49,6 +49,13 @@ backgroundColor: Colors.white,
             children: <Widget>[
 
               Container(
+                child: Image.network("https://i.pinimg.com/originals/f8/f6/56/f8f656fd473305405d82d4a64f777a85.jpg",
+                  fit: BoxFit.cover,
+
+                  width: double.infinity
+
+                  ,
+                ),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -59,59 +66,8 @@ backgroundColor: Colors.white,
               height:230,
               ),
 
-              Positioned.fill(
-top: 50,
-                child: Align(
-
-alignment: Alignment.center,
-                  child: Column(
-                    children: <Widget>[
-                      CircleAvatar(
 
 
-                        child:
-
-                        Image.network("https://icons-for-free.com/iconfiles/png/512/Google-1320568266385361674.png"),
-                      radius: 50,
-                        backgroundColor: Colors.transparent,
-
-
-                      ),
-
-SizedBox(height: 20,),
-                      Row(
-
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-
-                        Text("Type",style: infoStyle1,),
-                        Text("Level",style: infoStyle1),
-                        Text("Location",style: infoStyle1),
-                      ],),
-
-                      SizedBox(height: 5,),
-                      Row(
-
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-
-                        Text("Remote",style: infoStyle),
-                        Text("Entry",style: infoStyle,),
-                        Text("Paris",style: infoStyle),
-                      ],),
-
-
-
-
-
-                    ],
-
-
-
-                  ),
-                ),
-              )
-,
 Positioned(
   left: 20,
   top: 40,
@@ -122,7 +78,8 @@ Positioned(
           onTap: (){
             Navigator.pop(context);
           },
-          child: Icon(FontAwesomeIcons.arrowLeft,color: Colors.white,))),
+          child: Icon(FontAwesomeIcons.arrowLeft,color: Colors.black,
+          size: 30,))),
 )
 
             ],

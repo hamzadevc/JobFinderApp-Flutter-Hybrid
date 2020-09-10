@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:job_application/createGig.dart';
 import 'package:job_application/jobView.dart';
 
 import 'customDrawer.dart';
@@ -236,17 +237,46 @@ color: Colors.white);
           body: TabBarView(
             children: <Widget>[
 
-              ListView(
-                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 2),
-                physics: BouncingScrollPhysics(),
-                children: [
 
-                gigCard(),
-                gigCard(),
-                gigCard(),
-                gigCard()
-              ],)
-              ,
+
+Stack(children: [
+  ListView(
+    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 2),
+    physics: BouncingScrollPhysics(),
+    children: [
+
+      gigCard(),
+      gigCard(),
+      gigCard(),
+      gigCard()
+    ],)
+  ,
+  Padding(
+    padding: const EdgeInsets.only(bottom: 50,right: 20),
+    child: Align(
+
+      alignment: Alignment.bottomRight,
+      child: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateGig()),
+          );
+        },
+        tooltip: "Add New Gig",
+        elevation: 10,
+        child:
+
+        Icon(FontAwesomeIcons.pen),
+
+        backgroundColor: Colors.deepPurple,
+      ),
+    ),
+  ),
+],)
+
+
+           ,
 
 
 
@@ -307,20 +337,20 @@ padding: EdgeInsets.all(15),
 
             Divider(color: Colors.black,
             thickness: 1,),
-            Row(children: [
-
-              CircleAvatar(child:
-              Image.network("https://cdn2.iconfinder.com/data/icons/ui-v-1-circular-glyph/48/UI_v.1-Circular-Glyph-20-512.png"),
-                backgroundColor: Colors.white70,
-                radius: 30,
-
-              ),
-              SizedBox(width: 15,),
-              Text("Anonymous",style: TextStyle(fontWeight: FontWeight.bold,
-                  fontSize: 22
-              ))
-
-            ],),
+//            Row(children: [
+//
+//              CircleAvatar(child:
+//              Image.network("https://cdn2.iconfinder.com/data/icons/ui-v-1-circular-glyph/48/UI_v.1-Circular-Glyph-20-512.png"),
+//                backgroundColor: Colors.white70,
+//                radius: 30,
+//
+//              ),
+//              SizedBox(width: 15,),
+//              Text("Anonymous",style: TextStyle(fontWeight: FontWeight.bold,
+//                  fontSize: 22
+//              ))
+//
+//            ],),
 SizedBox(height: 10,),
             Text("I will Create Wordpress website for u",style: TextStyle(
                 fontSize: 20
@@ -359,9 +389,7 @@ SizedBox(height: 10,),
 // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
 
-        Text("Google",style: Companystyle,
-          textAlign: TextAlign.left,),
-        SizedBox(height: 8,),
+
         Padding(
           padding: const EdgeInsets.only(left: 20),
           child: Row(
@@ -396,7 +424,7 @@ flex: 1,
             Row(
 mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-          Text("Type ",style: TextStyle(
+          Text("Budget ",style: TextStyle(
 
             color: Colors.black87
 
@@ -408,7 +436,7 @@ mainAxisAlignment: MainAxisAlignment.center,
              Text(" |  "),
 
 
-                Text("Contract",textAlign: TextAlign.left,)
+                Text("\$20",textAlign: TextAlign.left,)
         ],),
 
         Row(

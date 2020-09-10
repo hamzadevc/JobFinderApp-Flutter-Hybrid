@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'CRUD.dart';
 import 'companyWelcome.dart';
 import 'package:job_application/signIn.dart';
 
@@ -25,6 +26,7 @@ class _SelectCategoryState extends State<SelectCategory> {
           children: <Widget>[
           RaisedButton(
             onPressed: (){
+              CRUD.type="seller";
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SignIn()),
@@ -40,9 +42,10 @@ class _SelectCategoryState extends State<SelectCategory> {
           ),
           RaisedButton(
             onPressed: (){
+              CRUD.type="buyer";
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Welcome()),
+                MaterialPageRoute(builder: (context) => SignIn()),
               );
             },
             textColor: Colors.white,

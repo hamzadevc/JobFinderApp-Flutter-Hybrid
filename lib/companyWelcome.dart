@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:job_application/companyCreateJob.dart';
+import 'package:job_application/gigList.dart';
 import 'package:job_application/jobView.dart';
 
 import 'package:job_application/customDrawer.dart';
 
-class Welcome extends StatefulWidget {
+class CWelcome extends StatefulWidget {
   @override
-  _WelcomeState createState() => _WelcomeState();
+  _CWelcomeState createState() => _CWelcomeState();
 }
 
-class _WelcomeState extends State<Welcome> {
+class _CWelcomeState extends State<CWelcome> {
   bool isSearch=false;
   GlobalKey<ScaffoldState> key1 = GlobalKey<ScaffoldState>();
   TextStyle Companystyle=TextStyle(fontSize: 25,fontWeight: FontWeight.bold);
@@ -296,33 +297,42 @@ elevation: 10,
     );
   }
 
-  Card categoryCard(String name,Icon data) {
-    return Card(
-      shape: RoundedRectangleBorder(
+   categoryCard(String name,Icon data) {
+
+    return InkWell(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GigList()),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
 
 
-        side: new BorderSide(color: Colors.indigo, width: 2.0),
-      ),
+          side: new BorderSide(color: Colors.indigo, width: 2.0),
+        ),
 
 
-                  elevation: 11,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                     data,
-                      SizedBox(height: 20,),
-                      Text(name, textAlign:TextAlign.center,style: TextStyle(color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                    elevation: 11,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                       data,
+                        SizedBox(height: 20,),
+                        Text(name, textAlign:TextAlign.center,style: TextStyle(color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                          fontSize: 18,
 
-                      )),
+                        )),
 
-                    ],),
-                    color: Colors.white,
+                      ],),
+                      color: Colors.white,
+                    ),
                   ),
-                );
+    );
   }
 
   Widget JobCard() {

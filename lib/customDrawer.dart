@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:job_application/profile.dart';
 
+import 'CRUD.dart';
+
 class CustomDrawer {
   static buildDrawer(BuildContext context) {
     print("dsd");
@@ -38,13 +40,13 @@ class CustomDrawer {
                 /// ---------------------------
 
                 Text(
-                  "Main Menu",
+                  "Personal Balance \$45",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.white70,
                       fontSize: 25.0,
                       fontWeight: FontWeight.bold),
                 ),
-
+                _buildDivider(),
                 /// ---------------------------
                 /// Building items list  for drawer .
                 /// ---------------------------
@@ -88,7 +90,14 @@ class CustomDrawer {
 
                 _buildDivider(),
 
-                _buildRow(Icons.settings_power, "Logout"),
+                InkWell(
+                    onTap: ()async{
+
+                      await CRUD.Logout(context);
+
+                    },
+
+                    child: _buildRow(Icons.settings_power, "Logout")),
                 _buildDivider(),
 SizedBox(height: 30,),
                 Text(
