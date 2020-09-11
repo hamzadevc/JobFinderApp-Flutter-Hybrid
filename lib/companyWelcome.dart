@@ -6,6 +6,8 @@ import 'package:job_application/jobView.dart';
 
 import 'package:job_application/customDrawer.dart';
 
+import 'CRUD.dart';
+
 class CWelcome extends StatefulWidget {
   @override
   _CWelcomeState createState() => _CWelcomeState();
@@ -13,7 +15,7 @@ class CWelcome extends StatefulWidget {
 
 class _CWelcomeState extends State<CWelcome> {
   bool isSearch=false;
-  GlobalKey<ScaffoldState> key1 = GlobalKey<ScaffoldState>();
+ // GlobalKey<ScaffoldState> key1 = GlobalKey<ScaffoldState>();
   TextStyle Companystyle=TextStyle(fontSize: 25,fontWeight: FontWeight.bold);
   TextStyle jobTitlestyle=TextStyle(fontSize: 18,
       color: Colors.blueAccent,fontWeight: FontWeight.bold);
@@ -25,7 +27,7 @@ class _CWelcomeState extends State<CWelcome> {
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
-          key: key1,
+          key: CRUD.key1,
           drawer: CustomDrawer.buildDrawer(context),
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100.0),
@@ -96,7 +98,7 @@ class _CWelcomeState extends State<CWelcome> {
                 padding: const EdgeInsets.only(top: 18.0),
                 child: IconButton(
                   onPressed: () {
-                    key1.currentState.openDrawer();
+                    CRUD.key1.currentState.openDrawer();
                   },
                   icon: Icon(Icons.dehaze),
                 ),

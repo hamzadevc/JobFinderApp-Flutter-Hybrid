@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:job_application/createGig.dart';
 import 'package:job_application/jobView.dart';
 
+import 'CRUD.dart';
 import 'customDrawer.dart';
 
 class Welcome extends StatefulWidget {
@@ -14,7 +15,7 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
   bool isSearch=false;
-  GlobalKey<ScaffoldState> key1 = GlobalKey<ScaffoldState>();
+ // GlobalKey<ScaffoldState> key1 = GlobalKey<ScaffoldState>();
 TextStyle Companystyle=TextStyle(fontSize: 25,fontWeight: FontWeight.bold);
 TextStyle jobTitlestyle=TextStyle(fontSize: 18,
 color: Colors.blueAccent,fontWeight: FontWeight.bold);
@@ -26,7 +27,7 @@ color: Colors.white);
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
-          key: key1,
+          key:  CRUD.key1,
           drawer: CustomDrawer.buildDrawer(context),
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100.0),
@@ -97,7 +98,7 @@ color: Colors.white);
                 padding: const EdgeInsets.only(top: 18.0),
                 child: IconButton(
                   onPressed: () {
-                    key1.currentState.openDrawer();
+                    CRUD.key1.currentState.openDrawer();
                   },
                   icon: Icon(Icons.dehaze),
                 ),

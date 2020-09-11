@@ -16,8 +16,8 @@ class CRUD{
 
 
 ////////
-
-
+  static GlobalKey<ScaffoldState> key1 = GlobalKey<ScaffoldState>();
+////
 
 
 static Logout(context)async{
