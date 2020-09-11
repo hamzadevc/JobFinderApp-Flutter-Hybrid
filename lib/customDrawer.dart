@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:job_application/editProfile.dart';
 import 'dart:io';
 
-import 'package:job_application/profile.dart';
 
 import 'CRUD.dart';
 

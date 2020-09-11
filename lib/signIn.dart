@@ -28,8 +28,9 @@ class _SignInState extends State<SignIn> {
     FirebaseAuth.instance.currentUser().then((firebaseUser) {
       if (firebaseUser == null) {
         //signed out
-      } else if (firebaseUser != null) {
+      } else if (firebaseUser != null){
         //signed in
+         CRUD.AddData();
         if(CRUD.type=="seller"){
           Navigator.push(
             context,
