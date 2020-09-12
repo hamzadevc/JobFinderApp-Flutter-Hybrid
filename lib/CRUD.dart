@@ -103,8 +103,8 @@ async{
 
 static AddData()async{
 
-  FirebaseUser loggedinUser;
 
+  FirebaseUser loggedinUser;
 
   try {
     final user = await _auth.currentUser();
@@ -119,16 +119,18 @@ static AddData()async{
 
 
   final QuerySnapshot resultQuery=await Firestore.instance
-  .collection(type).where(myuserid).getDocuments();
+  .collection(type).where('id',isEqualTo: myuserid).getDocuments();
 
   final List<DocumentSnapshot> documentSnapshot=resultQuery.documents;
 
   print(documentSnapshot.length);
+
   if(documentSnapshot.length==0)
    {
 
      Firestore.instance.collection(type).document(myuserid).setData({
 
+       'id':myuserid,
        'name':name,
        'email':email,
        'phone_number':phoneNumber,

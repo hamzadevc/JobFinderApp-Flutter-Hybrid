@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -23,86 +24,119 @@ TextStyle infoStyle=TextStyle(fontSize: 15,fontWeight: FontWeight.bold,
 color: Colors.white);
   @override
   Widget build(BuildContext context) {
+    print(CRUD.myuserid);
+    print(CRUD.type);
+
     return SafeArea(
-      child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          key:  CRUD.key1,
-          drawer: CustomDrawer.buildDrawer(context),
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.0),
-            child: AppBar(
+      child: StreamBuilder(
 
-              actions: <Widget>[
-               isSearch?
-                Padding(
-                  padding: const EdgeInsets.only(right:8.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-
-                    child: IconButton(
-                      onPressed: (){
-                        setState(() {
-
-                  isSearch=false;
-
-                        });
-
-                      },
-                      icon: new FaIcon(
-
-                        FontAwesomeIcons.timesCircle,),
-                    ),
-                  ),
-                ):
-                Padding(
-                  padding: const EdgeInsets.only(right:8.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-
-                    child: IconButton(
-                      onPressed: (){
-                        setState(() {
-
-                          isSearch=true;
-
-
-                        });
-
-                      },
-                      icon: new FaIcon(
-
-                        FontAwesomeIcons.search,),
-                    ),
-                  ),
-                )
+        //  stream: Firestore.instance.collection("collection").snapshots(),
+       stream: Firestore.instance.collection("seller").snapshots(),
+          builder: (context, snapshot) {
+//            if (!snapshot.hasData) {
+//
+//
+//              return Center(child: new CircularProgressIndicator(
+//
+//
+//              ));
+//            }
 
 
 
+//            CRUD.name= userDocument["name"];
+//            CRUD.imgUrl=userDocument['img'];
+
+       if(snapshot.hasData){
+
+         for(int i=0;i<snapshot.data.documents.length;i++)
+           {
+            if(snapshot.data.documents[i]['id']==CRUD.myuserid)
+              {
+
+                CRUD.name=snapshot.data.documents[i]['name'];
+                CRUD.imgUrl=snapshot.data.documents[i]['img'];
+print(snapshot.data.documents[i]['name']);
+              }
+           }
+
+//         var doc=snapshot.data.documents[0];
+//         print(doc['name']) ;
+        /// DocumentSnapshot items = snapshot.data.documents;
+             // var userdoc=snapshot.data;
+//         DocumentSnapshot products =
+//         snapshot.data.documents[0];
+
+              return DefaultTabController(
+                length: 3,
+                child: Scaffold(
+
+                  key: CRUD.key1,
+                  drawer: CustomDrawer.buildDrawer(context),
+                  appBar: PreferredSize(
+                    preferredSize: Size.fromHeight(100.0),
+                    child: AppBar(
+
+                      actions: <Widget>[
+                        isSearch ?
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+
+                            child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isSearch = false;
+                                });
+                              },
+                              icon: new FaIcon(
+
+                                FontAwesomeIcons.timesCircle,),
+                            ),
+                          ),
+                        ) :
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+
+                            child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isSearch = true;
+                                });
+                              },
+                              icon: new FaIcon(
+
+                                FontAwesomeIcons.search,),
+                            ),
+                          ),
+                        )
 
 
-              ],
+                      ],
 
 
-              flexibleSpace: Container(
-                decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [Colors.indigoAccent, Colors.deepPurple],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-              ),
-              leading: Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: IconButton(
-                  onPressed: () {
-                    CRUD.key1.currentState.openDrawer();
-                  },
-                  icon: Icon(Icons.dehaze),
-                ),
-              ),
+                      flexibleSpace: Container(
+                        decoration: new BoxDecoration(
+                          gradient: new LinearGradient(
+                              colors: [Colors.indigoAccent, Colors.deepPurple],
+                              begin: const FractionalOffset(0.0, 0.0),
+                              end: const FractionalOffset(1.0, 0.0),
+                              stops: [0.0, 1.0],
+                              tileMode: TileMode.clamp),
+                        ),
+                      ),
+                      leading: Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: IconButton(
+                          onPressed: () {
+                            CRUD.key1.currentState.openDrawer();
+                          },
+                          icon: Icon(Icons.dehaze),
+                        ),
+                      ),
 
 //            appBar: PreferredSize(
 //              preferredSize: Size.fromHeight(65.0),
@@ -160,156 +194,173 @@ color: Colors.white);
 //                ],
 //              ),
 //            ),
-              bottom: TabBar(
+                      bottom: TabBar(
 
-                tabs: <Widget>[
-                  Tab(
-                    
-                    child: Row(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.boxes, color: Colors.white),
-                        SizedBox(width: 10,),
-                        Text('My Gigs ', style: TextStyle(color: Colors.white)),
-                      ],
+                        tabs: <Widget>[
+                          Tab(
+
+                            child: Row(
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.boxes, color: Colors.white),
+                                SizedBox(width: 10,),
+                                Text('My Gigs ',
+                                    style: TextStyle(color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                          Tab(
+                            child: Row(
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.briefcase,
+                                    color: Colors.white),
+                                SizedBox(width: 10,),
+                                Text('Jobs',
+                                    style: TextStyle(color: Colors.white)),
+                              ],
+                            ),
+                          ),
+
+                          Tab(
+                            child: Row(
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.checkCircle
+                                    , color: Colors.white),
+                                SizedBox(width: 10,),
+                                Text('Completed',
+                                    style: TextStyle(color: Colors.white)),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+
+                      title: !isSearch ? Text("Job Finder", style: TextStyle(
+                          fontFamily: 'Spicy Rice'
+                      ),
+
+                      ) : Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: TextField(
+                          onChanged: (value) {
+                            // myfilter(value);
+
+                          },
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+
+                          decoration: InputDecoration(hintText: "Search Jobs",
+                            hintStyle: TextStyle(
+                                color: Colors.white
+                            ),
+                            icon: new Icon(Icons.search, color: Colors.white,),
+
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white70),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+
+
+                        ),
+                      )
+
+                      ,
+                      centerTitle: true,
+
                     ),
-                  ),
-                  Tab(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.briefcase, color: Colors.white),
-                        SizedBox(width: 10,),
-                        Text('Jobs', style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
+
+
                   ),
 
-                  Tab(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.checkCircle
-                            , color: Colors.white),
-                        SizedBox(width: 10,),
-                        Text('Completed', style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
+                  body: TabBarView(
+                    children: <Widget>[
+
+
+                      Stack(children: [
+                        ListView(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 2),
+                          physics: BouncingScrollPhysics(),
+                          children: [
+
+                            gigCard(),
+                            gigCard(),
+                            gigCard(),
+                            gigCard()
+                          ],)
+                        ,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50, right: 20),
+                          child: Align(
+
+                            alignment: Alignment.bottomRight,
+                            child: FloatingActionButton(
+                              onPressed: () {
+
+
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CreateGig()),
+                                );
+                              },
+                              tooltip: "Add New Gig",
+                              elevation: 10,
+                              child:
+
+                              Icon(FontAwesomeIcons.pen),
+
+                              backgroundColor: Colors.deepPurple,
+                            ),
+                          ),
+                        ),
+                      ],)
+
+
+                      ,
+
+
+                      ListView(
+                        padding: EdgeInsets.all(10),
+                        physics: BouncingScrollPhysics(),
+                        children: <Widget>[
+                          JobCard(),
+                          JobCard(),
+                          JobCard(),
+                          JobCard(),
+                          JobCard(),
+
+                        ],
+
+                      ),
+
+                      ListView(
+                        physics: const BouncingScrollPhysics(),
+                        children: <Widget>[
+                          Card1(),
+                          Card1(),
+                          Card1(),
+
+                        ],
+                      ),
+
+
+                    ],
                   ),
-
-                ],
-              ),
-
-              title: !isSearch? Text("Job Finder",style: TextStyle(
-                  fontFamily: 'Spicy Rice'
-              ),
-
-              ):Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: TextField(
-                  onChanged:(value){
-                   // myfilter(value);
-
-                  } ,
-                  style: TextStyle(color: Colors.white,fontSize: 18),
-
-                  decoration: InputDecoration(hintText:"Search Jobs",hintStyle:TextStyle(
-                      color: Colors.white
-                  ),
-                    icon: new Icon(Icons.search,color: Colors.white,),
-
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white70),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-
-
-
                 ),
-              )
+              );
+            }
 
-              ,centerTitle: true,
-
-            ),
-
-
-            ),
-
-          body: TabBarView(
-            children: <Widget>[
+       else{
+         return Center(child: CircularProgressIndicator());
+       }
 
 
 
-Stack(children: [
-  ListView(
-    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 2),
-    physics: BouncingScrollPhysics(),
-    children: [
-
-      gigCard(),
-      gigCard(),
-      gigCard(),
-      gigCard()
-    ],)
-  ,
-  Padding(
-    padding: const EdgeInsets.only(bottom: 50,right: 20),
-    child: Align(
-
-      alignment: Alignment.bottomRight,
-      child: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CreateGig()),
-          );
-        },
-        tooltip: "Add New Gig",
-        elevation: 10,
-        child:
-
-        Icon(FontAwesomeIcons.pen),
-
-        backgroundColor: Colors.deepPurple,
-      ),
-    ),
-  ),
-],)
-
-
-           ,
-
-
-
-
-              ListView(
-                padding: EdgeInsets.all(10),
-                physics: BouncingScrollPhysics(),
-                  children: <Widget>[
-                    JobCard(),
-                    JobCard(),
-                    JobCard(),
-                    JobCard(),
-                    JobCard(),
-
-                  ],
-
-                  ),
-
-              ListView(
-                physics: const BouncingScrollPhysics(),
-                children: <Widget>[
-                  Card1(),
-                  Card1(),
-                  Card1(),
-
-                ],
-              ),
-
-
-            ],
-          ),
-        ),
+          }
       ),
     );
   }
@@ -462,6 +513,10 @@ Expanded(
       ),
                 onPressed: ()
                 {
+
+
+
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => JobView()),
