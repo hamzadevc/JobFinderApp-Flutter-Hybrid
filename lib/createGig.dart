@@ -228,40 +228,45 @@ String gigImg;
     storageReference.getDownloadURL().then((fileURL) {
       setState(() {
      gigImg=fileURL;
-        print(gigImg);
+
 
        // showSpinner = false;
       });
+
+      print(gigImg);
+      Firestore.instance.collection("Gigs").document().setData({
+        'create_id':CRUD.myuserid,
+        'create_img':CRUD.imgUrl,
+        'create_name':CRUD.name,
+        'gig_img':gigImg,
+        'title':title,
+        'description':description,
+        'time':time,
+        'price':price,
+        'type':'programming'
+
+      })
+          .then((value) {
+
+        print('gig data added');
+
+      }).catchError((onError){
+
+        print('Failed to add data');
+
+      });
+      setState(() {
+        showSpinner=false;
+      });
+
+
+
     });
 
 
 
 
 
-   await Firestore.instance.collection("Gigs").document().setData({
-      'create_id':CRUD.myuserid,
-      'create_img':CRUD.imgUrl,
-      'create_name':CRUD.name,
-      'gig_img':gigImg,
-      'title':title,
-      'description':description,
-      'time':time,
-      'price':price,
-      'type':'programming'
-
-    })
-        .then((value) {
-
-      print('gig data added');
-
-    }).catchError((onError){
-
-      print('Failed to add data');
-
-    });
-setState(() {
-  showSpinner=false;
-});
 
 
 //    Firestore.instance.collection(type).document(myuserid).setData({

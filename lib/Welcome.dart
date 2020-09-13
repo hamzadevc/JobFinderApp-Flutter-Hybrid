@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,10 +23,51 @@ TextStyle jobTitlestyle=TextStyle(fontSize: 18,
 color: Colors.blueAccent,fontWeight: FontWeight.bold);
 TextStyle infoStyle=TextStyle(fontSize: 15,fontWeight: FontWeight.bold,
 color: Colors.white);
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+  loggedinuser();
+    super.initState();
+  }
+
+
+  loggedinuser() async {
+    await FirebaseAuth.instance.currentUser().then((firebaseUser) {
+      if (firebaseUser == null) {
+        //signed out
+      } else if (firebaseUser != null){
+        //signed in
+        CRUD.myuserid= firebaseUser.uid;
+        print(firebaseUser.uid);
+
+      }
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     print(CRUD.myuserid);
     print(CRUD.type);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return SafeArea(
       child: StreamBuilder(
@@ -48,6 +90,12 @@ color: Colors.white);
 //            CRUD.imgUrl=userDocument['img'];
 
        if(snapshot.hasData){
+
+
+
+
+
+
 
          for(int i=0;i<snapshot.data.documents.length;i++)
            {
@@ -517,10 +565,10 @@ Expanded(
 
 
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => JobView()),
-                  );
+//                  Navigator.push(
+//                    context,
+//                    MaterialPageRoute(builder: (context) => JobView()),
+//                  );
                 },
                 color: Colors.deepPurple,
                 child:

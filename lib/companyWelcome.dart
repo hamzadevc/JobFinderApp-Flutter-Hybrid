@@ -277,7 +277,7 @@ class _CWelcomeState extends State<CWelcome> {
                           MaterialPageRoute(builder: (context) => CreateJob()),
                         );
                       },
-tooltip: "Add New Job",
+tooltip: "Add New Proposal",
 elevation: 10,
                       child:
 
@@ -427,10 +427,10 @@ elevation: 10,
                     ),
                     onPressed: ()
                     {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => JobView()),
-                      );
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(builder: (context) => JobView()),
+//                      );
                     },
                     color: Colors.indigo,
                     child:

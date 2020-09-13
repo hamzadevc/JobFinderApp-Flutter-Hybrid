@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:job_application/selectionScreen.dart';
 import 'package:job_application/signIn.dart';
 
 class CRUD{
@@ -36,16 +37,32 @@ static Logout(context)async{
   await _firebaseAuth.signOut().then((_) {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => SignIn()),
+      MaterialPageRoute(builder: (context) => SelectCategory()),
           (Route<dynamic> route) => false,
     );
-//    refresh();
+    refresh();
   });
 
 
 
 
 }
+
+
+  static refresh() {
+    name="Enter Your Name";
+    email="Enter Email ID";
+    phoneNumber="Enter Mobile Number";
+    imgUrl= "https://image.flaticon.com/icons/png/512/0/93.png";
+    country="Enter Country";
+    city="Enter City";
+    address="Enter Address";
+    dob="Enter Date of Birth";
+    myuserid="";
+  }
+
+
+
   static final _auth = FirebaseAuth.instance;
 
 

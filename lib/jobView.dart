@@ -3,6 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class JobView extends StatefulWidget {
   @override
   _JobViewState createState() => _JobViewState();
+
+  String img;
+  String title;
+  String description;
+  String price;
+  String time;
+  JobView(this.img,this.title,this.description,this.price);
+
 }
 
 class _JobViewState extends State<JobView> {
@@ -49,12 +57,17 @@ backgroundColor: Colors.white,
             children: <Widget>[
 
               Container(
-                child: Image.network("https://i.pinimg.com/originals/f8/f6/56/f8f656fd473305405d82d4a64f777a85.jpg",
-                  fit: BoxFit.cover,
+                child: FittedBox(
+                  child: Image.network(widget.img,
 
-                  width: double.infinity
 
-                  ,
+
+
+
+                  ),
+
+
+                  fit: BoxFit.fill,
                 ),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -63,7 +76,8 @@ backgroundColor: Colors.white,
                     colors: [Colors.indigoAccent, Colors.deepPurple],
                   ),
                 ),
-              height:230,
+              height:260,
+                width: double.infinity,
               ),
 
 
@@ -89,7 +103,7 @@ Positioned(
 Padding(
   padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 20),
   child:   Container(
-    height: MediaQuery.of(context).size.height/2,
+    height: MediaQuery.of(context).size.height/2.2,
     child: ListView(
 physics: BouncingScrollPhysics(),
       children: <Widget>[
@@ -99,45 +113,41 @@ physics: BouncingScrollPhysics(),
 
           children: <Widget>[
 
-            Text("Google",style: heading,),
+            Text("Title",style: heading,),
             SizedBox(height: 8,),
-            Text("Flutter developer Required",style: TextStyle(
+            Text(widget.title,style: TextStyle(
               fontWeight: FontWeight.bold
             ),),
             SizedBox(height: 12,),
             Text("Description",style: heading,),
             SizedBox(height: 8,),
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"),
+            Text(widget.description),
             SizedBox(height: 8,),
-            Text("Qualifications",style: heading,),
+            Text("Price",style: heading,),
             SizedBox(height: 8,),
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit"),
+            Text(widget.price),
 
 
             SizedBox(height: 15,),
-            Row(
-              children: <Widget>[
-
-                Text("Upload Your CV",style: TextStyle(color: Colors.indigo,
-
-                fontWeight: FontWeight.bold
-
-                ),),
-
-
-                IconButton(
-                  tooltip: "Upload Your CV",
-                  icon: Icon(FontAwesomeIcons.upload),
-                  onPressed: (){}
-                  ,
-                  color: Colors.indigoAccent,
-                ),
-              ],
-            )
+//            Row(
+//              children: <Widget>[
+//
+//                Text("Upload Your CV",style: TextStyle(color: Colors.indigo,
+//
+//                fontWeight: FontWeight.bold
+//
+//                ),),
+//
+//
+//                IconButton(
+//                  tooltip: "Upload Your CV",
+//                  icon: Icon(FontAwesomeIcons.upload),
+//                  onPressed: (){}
+//                  ,
+//                  color: Colors.indigoAccent,
+//                ),
+//              ],
+//            )
 
           ],),
 
