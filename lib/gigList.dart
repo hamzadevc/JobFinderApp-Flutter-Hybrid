@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:job_application/jobView.dart';
+
+import 'CRUD.dart';
 class GigList extends StatefulWidget {
   @override
   _GigListState createState() => _GigListState();
@@ -11,7 +13,7 @@ class GigList extends StatefulWidget {
 
 class _GigListState extends State<GigList> {
   bool isSearch=false;
-
+  String creatorId;
   StreamSubscription <QuerySnapshot>subscription;
 
   List<DocumentSnapshot>gigs;
@@ -45,6 +47,7 @@ class _GigListState extends State<GigList> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       appBar: AppBar(
@@ -147,7 +150,7 @@ class _GigListState extends State<GigList> {
           String title = gigs[index].data['title'];
           String description = gigs[index].data['description'];
           String price = gigs[index].data['price'];
-          String creatorId = gigs[index].data['create_id'];
+         creatorId = gigs[index].data['create_id'];
           String gigImg = gigs[index].data['gig_img'];
 //  String imgPath=posts[index].data['img'];
 //  String imgPath=posts[index].data['img'];
@@ -173,10 +176,13 @@ class _GigListState extends State<GigList> {
                   personName = snapshot.data.documents[0]['name'];
                   personimg = snapshot.data.documents[0]['img'];
                   print(snapshot.data.documents[0]['name']);
+                 String CID=snapshot.data.documents[0]['id'];
 //      }
 //    }
                   return gigCard(
-                      gigImg, personName, personimg, title, price, description);
+                      gigImg, personName, personimg, title, price, description
+                  ,CID
+                  );
                   print(personimg);
                   print(personName);
                 }
@@ -202,38 +208,100 @@ class _GigListState extends State<GigList> {
           child: new CircularProgressIndicator()),
 
     );
+    
+    
+  
+    
+    
+    
   }
-  Widget gigCard(gigimg,pname,pImg,title,price,description)
+
+
+
+
+
+  CreateChatPlateform(reciverID,rname,rimg)async{
+
+print(reciverID);
+
+    final QuerySnapshot resultQuery=await Firestore.instance
+        .collection("chats").where('sender_id',isEqualTo: CRUD.myuserid
+    ).where('receiver_id',isEqualTo: reciverID).getDocuments();
+
+    final List<DocumentSnapshot> documentSnapshot=resultQuery.documents;
+    print(documentSnapshot.length);
+
+
+    if(documentSnapshot.length==0)
+      {
+        Firestore.instance.collection("chats").document().setData({
+
+          'sender_id':CRUD.myuserid,
+          'sender_name':CRUD.name,
+          'sender_img':CRUD.imgUrl,
+          'receiver_id':reciverID,
+          'receiver_name':rname,
+          'receiver_img':rimg,
+
+
+
+        }).then((value) {
+
+          print('chat data added');
+
+        }).catchError((onError){
+
+          print('Failed to add data');
+
+        });
+      }
+
+
+    
+
+
+
+
+
+
+  }
+
+
+
+
+  Widget gigCard(gigimg,pname,pImg,title,price,description,reciverID)
   {
+print(reciverID);
+    return Card(
+      shape: RoundedRectangleBorder(
 
-    return InkWell(
-
-      onTap: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => JobView(
-            gigimg,title,description,price
-
-
-          )),
-        );
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-
-          borderRadius: BorderRadius.circular(10.0),
-          side: new BorderSide(color: Colors.black, width: 1.0),
-        ),
-        elevation: 20,
-        child: Container(
+        borderRadius: BorderRadius.circular(10.0),
+        side: new BorderSide(color: Colors.black, width: 1.0),
+      ),
+      elevation: 20,
+      child: Container(
 
 
-            width: double.infinity,
-            child:
-            Column(children: [
+          width: double.infinity,
+          child:
+          Column(children: [
 
 
-              Container(
+            InkWell(
+              onTap: (){
+
+
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => JobView(
+                      gigimg,title,description,price
+
+
+                  )),
+                );
+              },
+              child: Container(
                 height: 250,
               width: double.infinity,
                 child: FittedBox(
@@ -247,10 +315,11 @@ class _GigListState extends State<GigList> {
                   ),
                 ),
               ),
+            ),
 
-              Divider(color: Colors.black,
-                thickness: 1,),
-              Row(children: [
+            Divider(color: Colors.black,
+              thickness: 1,),
+            Row(children: [
 
 //                CircleAvatar(
 //
@@ -262,47 +331,65 @@ class _GigListState extends State<GigList> {
 //                ),
 
 
-                Container(
-                  margin: EdgeInsets.only(left: 15),
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: new BoxDecoration(
-                      shape: BoxShape
-                          .circle,
-                      image: new DecorationImage(
-                        image: new NetworkImage(
-                            pImg),
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-
-
-                SizedBox(width: 15,),
-                Text(pname,style: TextStyle(fontWeight: FontWeight.bold,
-                    fontSize: 22
-                ))
-
-              ],),
-              SizedBox(height: 10,),
-              Text(title,style: TextStyle(
-                  fontSize: 20
-              )),
-
-              SizedBox(height: 15,),
-
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15,right: 15),
-                child: Align(
-
-                  alignment: Alignment.centerRight,
-                  child: Text("$price dollars",style: TextStyle(fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                      fontSize: 20
+              Container(
+                margin: EdgeInsets.only(left: 15),
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: new BoxDecoration(
+                    shape: BoxShape
+                        .circle,
+                    image: new DecorationImage(
+                      image: new NetworkImage(
+                          pImg),
+                      fit: BoxFit.cover,
+                    ),
                   )),
+
+
+              SizedBox(width: 15,),
+              Text(pname,style: TextStyle(fontWeight: FontWeight.bold,
+                  fontSize: 22
+              ))
+,
+              SizedBox(width: 55,),
+              InkWell(
+                onTap: (){
+                  CreateChatPlateform(reciverID,pname,pImg);
+                },
+
+
+                child: Card(
+
+                  color: Colors.deepPurple,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Message",style: TextStyle(
+                      color: Colors.white
+                    ),),
+                  ),
                 ),
+              )
+
+            ],),
+            SizedBox(height: 10,),
+            Text(title,style: TextStyle(
+                fontSize: 20
+            )),
+
+            SizedBox(height: 15,),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15,right: 15),
+              child: Align(
+
+                alignment: Alignment.centerRight,
+                child: Text("$price dollars",style: TextStyle(fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                    fontSize: 20
+                )),
               ),
-            ],)
-        ),
+            ),
+          ],)
       ),
     );
 

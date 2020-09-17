@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,16 +26,53 @@ color: Colors.blueAccent,fontWeight: FontWeight.bold);
 TextStyle infoStyle=TextStyle(fontSize: 15,fontWeight: FontWeight.bold,
 color: Colors.white);
 
+  StreamSubscription<QuerySnapshot>subscription;
+
+  List<DocumentSnapshot>myorders;
+//
+//  final CollectionReference collectionReference=
+//  Firestore.instance.collection("posts").document(CRUD.id)
+//      .collection("comments");
+  final CollectionReference collectionReference=
+  Firestore.instance.collection("Gigs");
 
 
 
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    subscription?.cancel();
+    super.dispose();
+
+  }
 
 @override
   void initState() {
     // TODO: implement initState
   loggedinuser();
     super.initState();
+
+  subscription=collectionReference
+      .where(
+      'create_id', isEqualTo: CRUD.myuserid)
+      .snapshots()
+      .listen((datasnapshot){
+
+
+    setState(() {
+      myorders=datasnapshot.documents;
+    });
+
+
+  });
+
   }
+
+
+
 
 
   loggedinuser() async {
@@ -262,7 +301,7 @@ print(snapshot.data.documents[i]['name']);
                                 Icon(FontAwesomeIcons.briefcase,
                                     color: Colors.white),
                                 SizedBox(width: 10,),
-                                Text('Jobs',
+                                Text('Orders',
                                     style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -283,7 +322,7 @@ print(snapshot.data.documents[i]['name']);
                         ],
                       ),
 
-                      title: !isSearch ? Text("Job Finder", style: TextStyle(
+                      title: !isSearch ? Text("A Freelancer", style: TextStyle(
                           fontFamily: 'Spicy Rice'
                       ),
 
@@ -327,18 +366,63 @@ print(snapshot.data.documents[i]['name']);
 
 
                       Stack(children: [
-                        ListView(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 2),
-                          physics: BouncingScrollPhysics(),
-                          children: [
 
-                            gigCard(),
-                            gigCard(),
-                            gigCard(),
-                            gigCard()
-                          ],)
-                        ,
+
+                        StreamBuilder(
+
+
+                       stream: Firestore.instance.collection("Gigs").where(
+                       'create_id', isEqualTo: CRUD.myuserid)
+                           .snapshots(),
+                       builder: (context, snapshot) {
+                         if (snapshot.hasData) {
+                           return ListView.builder(
+
+
+                             padding: EdgeInsets.symmetric(
+                                 vertical: 10, horizontal: 2),
+                             physics: BouncingScrollPhysics(),
+
+
+                               itemCount: snapshot.data.documents.length,
+                               itemBuilder: (context, index) {
+
+                               String imgPath=snapshot.data.documents[index]['gig_img'];
+                               String title=snapshot.data.documents[index]['title'];
+                               String price=snapshot.data.documents[index]['price'];
+
+
+                               return gigCard(imgPath,title,price);
+
+
+
+                               }
+
+
+
+//                             children: [
+//
+//                               gigCard(),
+//                               gigCard(),
+//                               gigCard(),
+//                               gigCard()
+//                             ],
+//
+
+
+                           );
+
+                         }
+
+
+                         else {
+                           return Center(child: CircularProgressIndicator());
+                         }
+                       }
+
+
+                        ),
+
                         Padding(
                           padding: const EdgeInsets.only(bottom: 50, right: 20),
                           child: Align(
@@ -370,20 +454,157 @@ print(snapshot.data.documents[i]['name']);
 
                       ,
 
+myorders!=null?
 
-                      ListView(
-                        padding: EdgeInsets.all(10),
-                        physics: BouncingScrollPhysics(),
-                        children: <Widget>[
-                          JobCard(),
-                          JobCard(),
-                          JobCard(),
-                          JobCard(),
-                          JobCard(),
+ListView.builder(
 
-                        ],
+            //physics: BouncingScrollPhysics(),
+            itemCount: myorders.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+            String docID=myorders[index].documentID.toString();
 
-                      ),
+            String title = myorders[index].data['title'];
+            String price = myorders[index].data['price'];
+            print("hellolololo");
+            print(docID);
+
+
+return  StreamBuilder(
+
+
+    stream:  Firestore.instance.collection("Gigs").document(docID)
+        .collection("orders")
+        .snapshots(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData)
+        {
+
+
+
+
+          for (int index=0;index<snapshot.data.documents.length;index++)
+            {
+              String date=snapshot.data.documents[index]['date_of_purchase'];
+              String status=snapshot.data.documents[index]['status'];
+              print(date);
+              print(status);
+
+             return JobCard(title,price,date,status);
+
+            }
+
+return Container();
+
+
+
+//          return ListView.builder(
+//
+//
+//              padding: EdgeInsets.symmetric(
+//                  vertical: 10, horizontal: 2),
+//              physics: BouncingScrollPhysics(),
+//
+//
+//              itemCount: snapshot.data.documents.length,
+//              itemBuilder: (context, index) {
+//
+//              //  String imgPath=snapshot.data.documents[index]['gig_img'];
+//                String date=snapshot.data.documents[index]['date_of_purchase'];
+//                String status=snapshot.data.documents[index]['status'];
+//print(date);
+//print(status);
+//
+//                return JobCard(title,price,date,status);
+//
+//
+//
+//              }
+//
+//
+//
+////                             children: [
+////
+////                               gigCard(),
+////                               gigCard(),
+////                               gigCard(),
+////                               gigCard()
+////                             ],
+////
+//
+//
+//          );
+
+
+
+//
+//          return StreamBuilder(
+//          stream:  Firestore.instance.collection("Gigs").document(docID)
+//            .collection("orders")
+//            .snapshots(),
+//        builder: (context, snapshot) {
+//        if (snapshot.hasData) {
+//
+//        }
+//        }
+//
+//          );
+
+
+
+
+          // String docID = snapshot.data.documents[0]['name'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+      else {
+        return Center(child: CircularProgressIndicator());
+      }
+
+
+
+//        child:
+//        ListView(
+//          padding: EdgeInsets.all(10),
+//          physics: BouncingScrollPhysics(),
+//
+//
+////
+////                        children: <Widget>[
+////                          JobCard(),
+////                          JobCard(),
+////                          JobCard(),
+////                          JobCard(),
+////                          JobCard(),
+////
+////                        ],
+//
+//        );
+
+
+    }
+);
+
+            }
+
+):
+Center(child: CircularProgressIndicator()),
+
+
+
+
+
 
                       ListView(
                         physics: const BouncingScrollPhysics(),
@@ -414,7 +635,7 @@ print(snapshot.data.documents[i]['name']);
   }
 
 
-  Widget gigCard()
+  Widget gigCard(img, title,price)
   {
 
     return Card(
@@ -431,7 +652,7 @@ padding: EdgeInsets.all(15),
           child:
           Column(children: [
 
-            Image.network("https://i.pinimg.com/originals/f8/f6/56/f8f656fd473305405d82d4a64f777a85.jpg",
+            Image.network(img,
 
             ),
 
@@ -452,14 +673,14 @@ padding: EdgeInsets.all(15),
 //
 //            ],),
 SizedBox(height: 10,),
-            Text("I will Create Wordpress website for u",style: TextStyle(
+            Text(title,style: TextStyle(
                 fontSize: 20
             )),
 
           SizedBox(height: 15,),
             Align(
               alignment: Alignment.centerRight,
-              child: Text("\$50 dollars",style: TextStyle(fontWeight: FontWeight.bold,
+              child: Text("$price dollars",style: TextStyle(fontWeight: FontWeight.bold,
                   color: Colors.deepPurple,
                   fontSize: 20
               )),
@@ -474,7 +695,9 @@ SizedBox(height: 10,),
 
 
 
-  Widget JobCard() {
+  Widget JobCard(title,price,date,status) {
+//    var date = DateTime.parse("2019-04-16 12:18:06.018950");
+//    var formattedDate = "${date.day}-${date.month}-${date.year}";
     return Container(
       //padding: EdgeInsets.only(top: 100,bottom: 100),
     padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 6),
@@ -490,66 +713,80 @@ SizedBox(height: 10,),
           children: <Widget>[
 
 
+
+
         Padding(
-          padding: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.symmetric(horizontal:10.0),
           child: Row(
 
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+
+              Expanded(
+                flex: 1,
+                child: Container(
+                  child: CircleAvatar(child:
+                  Image.network('https://icons-for-free.com/iconfiles/png/512/Google-1320568266385361674.png'),
+                    radius: 25,
+                    backgroundColor: Colors.transparent,
+                  ),
+                ),
+              ),
+
               Expanded(
 flex: 2,
                 child: Container(
-                  child: Text("Flutter Developer is resquired",style: jobTitlestyle,
+                  child: Text("Moin Khan",style: jobTitlestyle,
 
 
                   ),
                 ),
               ),
 
-              Expanded(
-flex: 1,
-                child: Container(
-                  child: CircleAvatar(child:
-                  Image.network('https://icons-for-free.com/iconfiles/png/512/Google-1320568266385361674.png'),
-                  radius: 25,
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
-              )
+Text(date)
 
             ],
           ),
         ),
-            SizedBox(height: 5,),
+            SizedBox(height: 10,),
             Row(
 mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-          Text("Budget ",style: TextStyle(
+          Text(title,style: TextStyle(
 
-            color: Colors.black87
+            color: Colors.black87,
+            fontWeight: FontWeight.bold
+
+          ),
+
 
           ),
 
 
-          ),
-
-             Text(" |  "),
 
 
-                Text("\$20",textAlign: TextAlign.left,)
+
         ],),
-
+SizedBox(height: 10,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-Expanded(
-  flex: 0,
-    child: Icon(FontAwesomeIcons.userTie,color: Colors.indigoAccent,)),
-            Expanded(
+Text("\$$price",
+  style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),),
 
-              child: Text("Applicants : 6",
-              style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),
+            Card(
+              shape: RoundedRectangleBorder(
+borderRadius: BorderRadius.circular(5),
 
+                side: new BorderSide(color: Colors.deepPurple, width: 2.0),
+              ),
+
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(status,
+                style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.bold),
+
+                ),
               ),
             ),
             Flexible(
